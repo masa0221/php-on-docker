@@ -1,0 +1,51 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:stable
+    environment:
+      PHP_HOST: php
+    command: >
+      /bin/bash -c 
+      "cat /etc/nginx/conf.d/default.conf.template | 
+      envsubst '$$PHP_HOST' > /etc/nginx/conf.d/default.conf && 
+      nginx -g 'daemon off;'"
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+    volumes:
+      - ./docker/nginx/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf.template
+      - ./public:/var/www/html
+  php:
+    build: ./docker/php-fpm/
+    env_file: .env
+    environment:
+      DATABASE_HOST: mysql
+      REDIS_HOST: redis
+    depends_on:
+      - mysql
+    volumes:
+      - ./public:/var/www/html
+      - ./vendor:/var/www/vendor
+      # Add any directories for PHP
+      # - ./src:/var/www/src
+  composer:
+    image: composer:latest
+    volumes:
+      - ./:/app
+    command: install
+  mysql:
+    image: mysql:8.0.11
+    env_file: .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./docker/mysql/etc/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+  redis:
+    image: redis:3.2.11-alpine
+    volumes:
+      - redis-volume:/data
+volumes:
+  mysql-volume:
+  redis-volume:

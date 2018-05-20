@@ -1,0 +1,14 @@
+{
+    "name": "masa0221/php-on-docker",
+    "authors": [
+        {
+            "name": "Masashi Tsuru"
+        }
+    ],
+    "require": {
+        "predis/predis": "~1.0"
+    },
+    "require-dev": {
+        "hirak/prestissimo": "dev-master"
+    }
+}
