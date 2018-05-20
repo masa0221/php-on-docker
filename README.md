@@ -43,11 +43,11 @@ docker-compose logs -f composer
 ```
 If you want to see other services, change service name.
 
-e.g `docker-compose logs -f nginx`
+e.g. `docker-compose logs -f nginx`
 
 You can to know kind of services, if see the `docker-compose.yml`.
 
 
 # Note
-- I cannot warranty behavior of environment on this repository.
-  therefore *****I DON'T HAVE RESPONSIBILITY**, when you use on production environment. :P
+- I cannot warranty behavior of environment on this repository.  
+  therefore **I DON'T HAVE RESPONSIBILITY**, when you use on production environment. :P
