@@ -1,0 +1,6 @@
+# SHELL=/bin/sh
+# PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+# * * * * * /path/to/your-script.sh
+

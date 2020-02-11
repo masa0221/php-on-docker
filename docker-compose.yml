@@ -30,10 +30,12 @@ services:
       # Add any directories for PHP
       # - ./src:/var/www/src
   composer:
-    image: composer:latest
+    build: ./docker/composer/
     volumes:
-      - ./:/app
-    command: install
+      - ./:/var/www/html
+    depends_on:
+      - php
+    entrypoint: composer
   mysql:
     image: mysql:8.0.11
     env_file: .env
@@ -46,6 +48,21 @@ services:
     image: redis:3.2.11-alpine
     volumes:
       - redis-volume:/data
+  cron:
+    build: ./docker/cron/
+    volumes:
+      - ./docker/cron/etc/cron.d:/etc/cron.d
+    #  - ./:/var/www/html
+    # If you need to environment variable, write below
+    # env_file: .env
+    # environment:
+    #   DATABASE_HOST: mysql
+    entrypoint: crond -l 2 -f
+    depends_on:
+      - php
+      # And adding depend service name in your application
+      # - mysql
+      # - redis
 volumes:
   mysql-volume:
   redis-volume:
