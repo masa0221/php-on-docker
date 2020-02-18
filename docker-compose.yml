@@ -63,6 +63,10 @@ services:
       # And adding depend service name in your application
       # - mysql
       # - redis
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
 volumes:
   mysql-volume:
   redis-volume:
