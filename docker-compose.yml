@@ -50,14 +50,15 @@ services:
       - redis-volume:/data
   cron:
     build: ./docker/cron/
+    entrypoint: crond -f -d 8
     volumes:
-      - ./docker/cron/etc/cron.d:/etc/cron.d
+      - ./docker/cron/etc/periodic:/etc/periodic
+      - ./docker/cron/var/spool/cron/crontabs:/var/spool/cron/crontabs
     #  - ./:/var/www/html
     # If you need to environment variable, write below
     # env_file: .env
     # environment:
     #   DATABASE_HOST: mysql
-    entrypoint: crond -l 2 -f
     depends_on:
       - php
       # And adding depend service name in your application

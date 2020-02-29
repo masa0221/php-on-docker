@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Hello cron!" >> /var/log/cron.log 2>&1
+
